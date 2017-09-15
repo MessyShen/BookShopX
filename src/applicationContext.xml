@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+
+
+    <bean id="MyDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+        <property name="url" value="jdbc:sqlserver://192.168.2.132:1433;databaseName=BookShopPlus"/>
+        <property name="username" value="sa"/>
+        <property name="password" value="123456"/>
+    </bean>
+
+    <!-- 配置Hibernate的sessionFactory实例 -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<!-- 配置数据源属性 -->
+		<property name="dataSource">
+			<ref bean="MyDataSource" />
+		</property>
+		<!-- 配置 Hibernate的基本属性-->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.SQLServer2008Dialect
+				</prop>
+                <prop key="hibernate.connection.url">jdbc:sqlserver://192.168.2.132:1433;database=BookShopPlus</prop>
+                <prop key="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</prop>
+            </props>
+		</property>
+        <property name="annotatedClasses">
+            <list>
+                <value>com.book.entity.Users</value>
+                <value>com.book.entity.Books</value>
+                <value>com.book.entity.Categories</value>
+            </list>
+        </property>
+
+
+	</bean>
+
+    <!-- 声明Hibernate事务管理器 -->
+
+  	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+    <!-- 开启注解处理器 -->
+    <context:annotation-config />
+
+    <!-- 开启Spring的Bean自动扫描机制来检查与管理Bean实例 -->
+    <context:component-scan base-package="com.book" />
+
+    <!-- 基于@Transactional注解方式的事务管理 -->
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+    <!--  定义事务通知 ,需要事务管理器  -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+	  <!-- 指定事务传播规则 -->
+	  <tx:attributes>
+	  	<!-- 对所有方法应用REQUIRED事务规则 -->
+	  	<tx:method name="*" propagation="REQUIRED" />
+	  </tx:attributes>
+	</tx:advice>
+
+    <!--定义切面，并将事务通知和切面组合（定义哪些方法应用事务规则） -->
+    <aop:config>
+        <!-- 对com.book.service包下的所有类的所有方法都应用事务规则 -->
+    	<aop:pointcut id="serviceMethods" expression="execution(* com.book.service.*.*(..))" />
+    	<!--  将事务通知和切面组合   -->
+    	<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethods" />
+    </aop:config>
+
+    <bean name="usersDAO" class="com.book.dao.impl.UsersDAOImpl" >
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="usersService" class="com.book.service.impl.UsersServiceImpl">
+        <property name="usersDAO" ref="usersDAO"/>
+    </bean>
+
+    <bean name="uslAction" class="com.book.action.UserLoginAction" scope="prototype">
+        <property name="usersService" ref="usersService"/>
+    </bean>
+
+    <!--<bean name="biAction" class="com.book.action.BookInfoAction" scope="prototype">-->
+        <!--<property name="bookInfoService" ref=""-->
+    <!--</bean>-->
+</beans>
