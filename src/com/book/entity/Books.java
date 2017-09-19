@@ -1,9 +1,6 @@
 package com.book.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
@@ -16,7 +13,35 @@ public class Books {
     private double unitPrice;
     private String contentDescription;
     private String toc;
+    private int publisherId;
+//    private String publisherName;
     private int clicks;
+    private int categoryId;
+
+
+
+    private Categories categories;
+    private Publishers publishers;
+
+    @ManyToOne
+    @JoinColumn(name="publisherId")
+    public Publishers getPublishers() {
+        return publishers;
+    }
+
+    public void setPublishers(Publishers publishers) {
+        this.publishers = publishers;
+    }
+
+    @ManyToOne
+    @JoinColumn(name="categoryId")
+    public Categories getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Categories categories) {
+        this.categories = categories;
+    }
 
     @Id
     @Column(name = "Id", nullable = false)
@@ -107,6 +132,28 @@ public class Books {
     public void setClicks(int clicks) {
         this.clicks = clicks;
     }
+
+    @Basic
+    @Column(name = "PublisherId", nullable = false)
+    public int getPublisherId() {
+        return publisherId;
+    }
+
+    public void setPublisherId(int publisherId) {
+        this.publisherId = publisherId;
+    }
+
+    @Basic
+    @Column(name = "CategoryId", nullable = false)
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+
 
     @Override
     public boolean equals(Object o) {

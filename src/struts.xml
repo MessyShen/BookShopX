@@ -2,12 +2,89 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
         "http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
-    <constant name="struts.i18n.encoding" value="UTF-8"></constant>
+    <constant name="struts.i18n.encoding" value="UTF-8"/>
     <package name="book" namespace="/" extends="struts-default">
         <!-- 为类中的方法配置映射 -->
+        <interceptors>
+            <interceptor name="loginCheck" class="com.book.interceptor.AuthorizationInterceptor"/>
+        </interceptors>
+
+        <global-results>
+            <result name="login">/login.jsp</result>
+        </global-results>
+
         <action name="doLogin" class="uslAction" method="doLogin">
-            <result name="index" type="dispatcher">index.jsp</result>
+            <result name="index" type="redirectAction">list</result>
             <result name="login" type="redirect">login.jsp</result>
         </action>
+
+        <action name="doRegister" class="uslAction" method="doRegister">
+            <result name="index" type="redirect">index.jsp</result>
+            <result name="register" type="redirect">reg.jsp</result>
+        </action>
+
+        <action name="usersListByPage" class="uslAction" method="usersListByPage">
+            <result name="list">/userInfo.jsp</result>
+        </action>
+
+        <action name="deleteById" class="uslAction" method="deleteById">
+            <result name="list" type="redirectAction">usersListByPage</result>
+        </action>
+
+        <action name="list" class="biAction" method="list">
+            <result name="index">/index.jsp</result>
+        </action>
+
+        <action name="logOut" class="uslAction" method="logOut">
+            <result name="index" type="redirectAction">list</result>
+        </action>
+
+        <action name="show" class="biAction" method="show">
+            <result name="show">/show.jsp</result>
+        </action>
+
+        <action name="listBookByPage" class="biAction" method="listBookByPage">
+            <result name="list">bookInfo.jsp</result>
+        </action>
+
+        <action name="listBookByCates" class="biAction" method="listBookByCates">
+            <result name="index">index.jsp</result>
+        </action>
+
+        <action name="listCate" class="biAction" method="listCate">
+            <result name="list">show.jsp</result>
+        </action>
+
+        <action name="searchBy" class="biAction" method="searchBy">
+            <result name="list">index.jsp</result>
+        </action>
+
+        <action name="addBook" class="addBkAction" method="addBook">
+            <result name="added">bookInfo.jsp</result>
+        </action>
+
+        <action name="addBookTest" class="addBkTestAction" method="addBookTest">
+            <result name="added">bookInfo.jsp</result>
+        </action>
+
+        <action name="addtoshopcart" class="cartAction" method="addtoshopcart">
+            <result name="shopCart">/cart.jsp</result>
+            <interceptor-ref name="loginCheck"/>
+            <interceptor-ref name="defaultStack"/>
+        </action>
+
+        <action name="updateSelectedQuantity" class="cartAction" method="updateSelectedQuantity">
+            <result name="shopCart">/cart.jsp</result>
+        </action>
+        <action name="deleteSelectedOrders" class="cartAction" method="deleteSelectedOrders">
+            <result name="shopCart">/cart.jsp</result>
+        </action>
+
+        <action name="clearCart" class="cartAction" method="clearCart">
+            <result name="shopCart">/cart.jsp</result>
+        </action>
+
+
+
     </package>
 </struts>

@@ -1,0 +1,32 @@
+<!--
+  ~ Hibernate, Relational Persistence for Idiomatic Java
+  ~
+  ~ License: GNU Lesser General Public License (LGPL), version 2.1 or later.
+  ~ See the lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>.
+  -->
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <!-- Hiberante 连接的基本信息  -->
+        <property name="connection.username">sa</property>
+        <property name="connection.password">123456</property>
+        <property name="connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+        <property name="connection.url">jdbc:sqlserver://192.168.2.132:1433;database=BookShopPlus</property>
+
+        <!-- Hiberante 方言  -->
+        <property name="dialect">org.hibernate.dialect.SQLServer2008Dialect</property>
+
+        <!-- 是否打印SQL -->
+        <property name="show_sql">true</property>
+
+        <!-- 关联 Hibernate 的映射文件 -->
+        <mapping class="com.book.entity.Users"/>
+        <mapping class="com.book.entity.Books"/>
+        <mapping class="com.book.entity.Categories"/>
+        <mapping class="com.book.entity.Publishers"/>
+
+    </session-factory>
+</hibernate-configuration>

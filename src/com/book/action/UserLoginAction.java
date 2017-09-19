@@ -6,14 +6,17 @@ import com.opensymphony.xwork2.ActionSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+
+import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @Scope("prototype")
-public class UserLoginAction extends ActionSupport {
+public class UserLoginAction extends ActionSupport implements SessionAware {
     Users users;
 
     public Users getUsers() {
@@ -24,6 +27,16 @@ public class UserLoginAction extends ActionSupport {
         this.users = users;
     }
 
+    int pageID;
+
+    public int getPageID() {
+        return pageID;
+    }
+
+    public void setPageID(int pageID) {
+        this.pageID = pageID;
+    }
+
     @Autowired
     UsersService usersService;
 
@@ -31,16 +44,57 @@ public class UserLoginAction extends ActionSupport {
         this.usersService = usersService;
     }
 
+
+    Map<String, Object> session;
+    @Override
+    public void setSession(Map<String, Object> session) {
+        this.session=session;
+    }
+
     public String doLogin() throws Exception {
 
         List<Users> usersList = usersService.login(users);
-        System.out.println("searching " + users.getLoginId() + " " + users.getLoginPwd() +  " "
-         + usersList.size());
+//        System.out.println("searching " + users.getLoginId() + " " + users.getLoginPwd() +  " "
+//         + usersList.size());
         if (usersList.size() > 0) {
+            session.put("CURRENT_USER",usersList.get(0));
             return "index";
         } else {
             return "login";
         }
     }
 
+    public String doRegister() throws Exception {
+        Users user = usersService.reg(users);
+        if (user != null) {
+            session.put("CURRENT_USER", user);
+            return "index";
+        } else {
+            return "register";
+        }
+    }
+
+    public String logOut(){
+        Users user=(Users)session.get("CURRENT_USER");
+        if (user!=null) {
+            session.remove("CURRENT_USER");
+        }
+        return "index";
+
+    }
+
+    public String usersListByPage(){
+        List<Users> usersList = usersService.getUsersByPageService(pageID);
+        if (usersList.size() > 0) {
+            System.out.println("Putting Users List");
+            session.put("USERS_LIST", usersList);
+        }
+        return "list";
+
+    }
+
+    public String deleteById(){
+        usersService.deleteById(users.getId());
+        return "list";
+    }
 }

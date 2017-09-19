@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoriesServiceImpl implements CategoriesService {
+
+    CategoriesDAO categoriesDAO;
     public CategoriesDAO getCategoriesDAO() {
         return categoriesDAO;
     }
@@ -16,7 +18,6 @@ public class CategoriesServiceImpl implements CategoriesService {
         this.categoriesDAO = categoriesDAO;
     }
 
-    CategoriesDAO categoriesDAO;
     @Override
     public List<Categories> getAllCates() {
 //        List<Categories> categoriesList = categoriesDAO.getAll();

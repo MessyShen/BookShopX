@@ -23,4 +23,19 @@ public class UsersServiceImpl implements UsersService {
     public List<Users> login(Users cond) {
         return usersDAO.search(cond);
     }
+
+    @Override
+    public Users reg(Users userReg) {
+        return usersDAO.reg(userReg);
+    }
+
+    @Override
+    public List<Users> getUsersByPageService(int page) {
+        return usersDAO.getUsersByPage(page);
+    }
+
+    @Override
+    public void deleteById(int userId) {
+        usersDAO.deleteById(userId);
+    }
 }

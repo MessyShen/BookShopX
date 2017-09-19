@@ -13,13 +13,19 @@ public class CategoriesDAOImpl implements CategoriesDAO {
         return sessionFactory;
     }
 
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     SessionFactory sessionFactory;
+
     @Override
     public List<Categories> getAll() {
         Session session = sessionFactory.getCurrentSession();
         String sql="from Categories";
         Query query=session.createQuery(sql);
         List<Categories> categories=query.list();
+      //  System.out.println("catesize:" + categories.size());
         return categories;
     }
 }

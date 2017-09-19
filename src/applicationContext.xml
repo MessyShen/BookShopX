@@ -45,6 +45,7 @@
                 <value>com.book.entity.Users</value>
                 <value>com.book.entity.Books</value>
                 <value>com.book.entity.Categories</value>
+                <value>com.book.entity.Publishers</value>
             </list>
         </property>
 
@@ -96,7 +97,40 @@
         <property name="usersService" ref="usersService"/>
     </bean>
 
-    <!--<bean name="biAction" class="com.book.action.BookInfoAction" scope="prototype">-->
+    <bean name="addBkAction" class="com.book.action.AddBookAction" scope="prototype">
+        <property name="bookInfoService" ref="bookInfoService"/>
+        <property name="categoriesService" ref="categoriesService"/>
+    </bean>
+
+    <bean name="addBkTestAction" class="com.book.action.addTestAction" scope="prototype">
+    </bean>
+
+    <bean id="categoriesDAO" class="com.book.dao.impl.CategoriesDAOImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="categoriesService" class="com.book.service.impl.CategoriesServiceImpl">
+        <property name="categoriesDAO" ref="categoriesDAO"/>
+    </bean>
+
+    <bean id="bookInfoDAO" class="com.book.dao.impl.BookInfoDAOImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="bookInfoService" class="com.book.service.impl.BookInfoServiceImpl">
+        <property name="bookInfoDAO" ref="bookInfoDAO"/>
+    </bean>
+
+    <bean id="biAction" class="com.book.action.BookInfoAction">
+        <property name="categoriesService" ref="categoriesService"/>
+        <property name="bookInfoService" ref="bookInfoService"/>
+    </bean>
+
+    <bean name="cartAction" class="com.book.action.CartAction">
+        <property name="bookInfoService" ref="bookInfoService"/>
+    </bean>
+
+    <!--<bean name="biAction" class="com.book.action.CategoriesInfoActionAction" scope="prototype">-->
         <!--<property name="bookInfoService" ref=""-->
     <!--</bean>-->
 </beans>
