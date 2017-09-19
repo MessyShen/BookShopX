@@ -1,6 +1,7 @@
 package com.book.service.impl;
 
 import com.book.dao.BookInfoDAO;
+import com.book.entity.BookItem;
 import com.book.entity.Books;
 import com.book.service.BookInfoService;
 
@@ -40,7 +41,7 @@ public class BookInfoServiceImpl implements BookInfoService {
         return bookInfoDAO.getAllBySearch(searchStr);
     }
 
-    public int addOneBook(Books bk){
+    public int addOneBook(BookItem bk){
         return bookInfoDAO.addOneBook(bk);
     }
 }

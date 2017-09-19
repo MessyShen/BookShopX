@@ -97,7 +97,7 @@
                                 </div>
                                 <div class="input-field col s12">
                                     <label for="cpassword">确认密码</label>
-                                    <input id="cpassword" type="password" name="users.loginPwd" data-error=".errorTxt4">
+                                    <input id="cpassword" type="password" name="cpassword" data-error=".errorTxt4">
                                     <div class="errorTxt4"></div>
                                 </div>
 

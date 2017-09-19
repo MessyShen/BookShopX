@@ -46,7 +46,7 @@ public class UsersDAOImpl implements UsersDAO {
         Session session = sessionFactory.getCurrentSession();
        // tx = session.beginTransaction();
         session.save(userReg);
-        session.getTransaction().commit();
+       // session.getTransaction().commit();
         return userReg;
     }
 

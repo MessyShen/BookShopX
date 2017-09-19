@@ -1,5 +1,6 @@
 package com.book.action;
 
+import com.book.entity.BookItem;
 import com.book.entity.Books;
 import com.book.entity.Categories;
 import com.book.service.BookInfoService;
@@ -42,14 +43,14 @@ public class AddBookAction  extends ActionSupport implements RequestAware,
         this.bookInfoService = bookInfoService;
     }
 
-    Books pi ;
+    BookItem bk ;
 
-    public Books getBk() {
-        return pi;
+    public BookItem getBk() {
+        return bk;
     }
 
-    public void setBk(Books pi) {
-        this.pi = pi;
+    public void setBk(BookItem bk) {
+        this.bk = bk;
     }
 
     public String getPicFileName() {
@@ -103,14 +104,17 @@ public class AddBookAction  extends ActionSupport implements RequestAware,
     }
 
     public String generateFileName(String fileName){
-        System.out.println("Filename" + fileName + " | isbn" + pi.getIsbn());
+        System.out.println("Filename" + fileName + " | isbn" + bk.getIsbn());
         String extension = getExtension(fileName);
-        return pi.getIsbn() + extension;
+        return bk.getIsbn() + extension;
     }
 
     public String addBook() throws IOException {
+        System.out.println("add init");
         resp.setContentType("text/html;charset=UTF-8");
         PrintWriter out = resp.getWriter();
+        System.out.println(pic.getName() + " " + bk.getIsbn());
+        //setPicFileName(pic.getName());
         String picFileExtName = getExtension(picFileName);
         String str = "";
         boolean flag=(!".png".equals(picFileExtName) && !".jpeg".equals(picFileExtName)
@@ -131,8 +135,9 @@ public class AddBookAction  extends ActionSupport implements RequestAware,
                 FileUtils.copyFile(pic, target);
                 // pi.setPic(targetFileName);
             }
+            bk.setPublishDate("2017-09-14 00:00:00.000");
 
-            int result = bookInfoService.addOneBook(pi);
+            int result = bookInfoService.addOneBook(bk);
             if (result > 0)
                 str = "{\"success\":\"true\",\"message\":\"添加成功！\"}";
             else

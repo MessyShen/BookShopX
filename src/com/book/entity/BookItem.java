@@ -1,11 +1,12 @@
 package com.book.entity;
 
 import javax.persistence.*;
+import java.awt.print.Book;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name="Books")
-public class Books {
+public class BookItem {
     private int id;
     private String title;
     private String author;
@@ -15,36 +16,12 @@ public class Books {
     private String contentDescription;
     private String toc;
     private int publisherId;
-//    private String publisherName;
+    //    private String publisherName;
     private int clicks;
     private int categoryId;
 
-
-
-    private Categories categories;
-    private Publishers publishers;
-
-    @ManyToOne(cascade=CascadeType.REFRESH)
-    @JoinColumn(name="publisherId")
-    public Publishers getPublishers() {
-        return publishers;
-    }
-
-    public void setPublishers(Publishers publishers) {
-        this.publishers = publishers;
-    }
-
-    @ManyToOne
-    @JoinColumn(name="categoryId")
-    public Categories getCategories() {
-        return categories;
-    }
-
-    public void setCategories(Categories categories) {
-        this.categories = categories;
-    }
-
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id", nullable = false)
     public int getId() {
         return id;
@@ -161,7 +138,7 @@ public class Books {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Books books = (Books) o;
+        BookItem books = (BookItem) o;
 
         if (id != books.id) return false;
         if (Double.compare(books.unitPrice, unitPrice) != 0) return false;

@@ -69,13 +69,15 @@ public class addTestAction  extends ActionSupport implements RequestAware,
     }
 
     public String getExtension(String fileName) {
-        return ".png";
+        int position = fileName.lastIndexOf(".");
+        return fileName.substring(position);
     }
 
     public String generateFileName(String fileName){
-     //   System.out.println("Filename" + fileName + " | isbn" + pi.getIsbn());
-        String extension = getExtension(fileName);
-        return "333.png";
+//        System.out.println("Filename" + fileName + " | isbn" + pi.getIsbn());
+//        String extension = getExtension(fileName);
+//        return pi.getIsbn() + extension;
+        return fileName;
     }
 
     public String addBookTest() throws IOException {
@@ -97,7 +99,7 @@ public class addTestAction  extends ActionSupport implements RequestAware,
                         .getRealPath("/images/BookCovers");
                 System.out.println(targetDirectory);
                 // 重命名上传文件
-                String targetFileName = "333.png";
+                String targetFileName = generateFileName(picFileName);
                 // 在指定目录创建文件
                 File target = new File(targetDirectory, targetFileName);
                 // 把要上传的文件copy过去

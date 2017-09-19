@@ -46,6 +46,7 @@
                 <value>com.book.entity.Books</value>
                 <value>com.book.entity.Categories</value>
                 <value>com.book.entity.Publishers</value>
+                <value>com.book.entity.BookItem</value>
             </list>
         </property>
 

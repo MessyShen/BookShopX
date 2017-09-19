@@ -20,6 +20,7 @@ public class Users {
     private Timestamp registerTime;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id", nullable = false)
     public int getId() {
         return id;

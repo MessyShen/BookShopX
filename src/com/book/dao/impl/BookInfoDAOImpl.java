@@ -1,13 +1,11 @@
 package com.book.dao.impl;
 
 import com.book.dao.BookInfoDAO;
+import com.book.entity.BookItem;
 import com.book.entity.Books;
 import com.book.entity.Categories;
 import com.book.entity.Publishers;
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 
 import java.awt.print.Book;
 import java.util.ArrayList;
@@ -113,8 +111,12 @@ public class BookInfoDAOImpl implements BookInfoDAO {
         return bkiList;
     }
 
-    public int addOneBook(Books bk){
+    public int addOneBook(BookItem bk){
+        System.out.println("At DAO:  " + bk.getIsbn() + " ||| "+ bk.getCategoryId());
         Session session = sessionFactory.getCurrentSession();
-        return (Integer) session.save(bk);
+        //Transaction tran = session.beginTransaction();
+        int ret = (Integer) session.save(bk);
+        //tran.commit();
+        return ret;
     }
 }

@@ -1,5 +1,6 @@
 package com.book.service;
 
+import com.book.entity.BookItem;
 import com.book.entity.Books;
 
 import java.awt.print.Book;
@@ -11,5 +12,5 @@ public interface BookInfoService {
     public Books getBookInfoById(int bid);
     public List<Books> getAllBookInfoByCates(int cate);
     public List<Books> searchForBookInfo(String searchStr);
-    public int addOneBook(Books bk);
+    public int addOneBook(BookItem bk);
 }
