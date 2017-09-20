@@ -5,6 +5,7 @@ import com.book.entity.BookItem;
 import com.book.entity.Books;
 import com.book.service.BookInfoService;
 
+import java.awt.print.Book;
 import java.util.List;
 
 public class BookInfoServiceImpl implements BookInfoService {
@@ -41,7 +42,29 @@ public class BookInfoServiceImpl implements BookInfoService {
         return bookInfoDAO.getAllBySearch(searchStr);
     }
 
+    @Override
+    public List<Books> searchByCond(String cond, String searchStr) {
+        return bookInfoDAO.getAllByCondition(cond, searchStr);
+    }
+
     public int addOneBook(BookItem bk){
         return bookInfoDAO.addOneBook(bk);
     }
+
+    @Override
+    public void deleteByCateService(int cateId) {
+        bookInfoDAO.deleteByCate(cateId);
+    }
+
+    @Override
+    public void updateBook(BookItem bk) {
+        bookInfoDAO.modifyBook(bk);
+    }
+
+    @Override
+    public BookItem getBkItemById(int bkid) {
+        return bookInfoDAO.getBkItemById(bkid);
+    }
+
+    public void deleteBookById(int bkid){bookInfoDAO.deleteBookById(bkid);}
 }

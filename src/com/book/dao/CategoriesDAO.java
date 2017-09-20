@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface CategoriesDAO {
     public List<Categories> getAll();//change this name!!
+    public int addCate(String cateName);
 }

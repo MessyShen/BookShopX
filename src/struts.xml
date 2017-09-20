@@ -27,6 +27,10 @@
             <result name="list">/userInfo.jsp</result>
         </action>
 
+        <action name="usersListByPageState" class="uslAction" method="usersListByPage">
+            <result name="list">/userState.jsp</result>
+        </action>
+
         <action name="deleteById" class="uslAction" method="deleteById">
             <result name="list" type="redirectAction">usersListByPage</result>
         </action>
@@ -55,14 +59,25 @@
             <result name="list">show.jsp</result>
         </action>
 
+        <action name="listCate2" class="biAction" method="listCate">
+            <result name="list">bookCate.jsp</result>
+        </action>
+
+        <action name="deleteByCate" class="biAction" method="deleteByCate">
+            <result name="list" type="redirectAction">listCate2</result>
+        </action>
+
         <action name="searchBy" class="biAction" method="searchBy">
             <result name="list">index.jsp</result>
         </action>
 
         <action name="addBook" class="addBkAction" method="addBook">
-            <result name="added">bookInfo.jsp</result>
+            <result name="added" type="redirectAction">listBookByPage</result>
         </action>
 
+        <action name="searchByCond" class="biAction" method="searchByCond">
+            <result name="list">bookInfo.jsp</result>
+        </action>
         <action name="addBookTest" class="addBkTestAction" method="addBookTest">
             <result name="added">bookInfo.jsp</result>
         </action>
@@ -84,7 +99,24 @@
             <result name="shopCart">/cart.jsp</result>
         </action>
 
+        <action name="addCateAction" class="ctAction" method="addCateAction">
+            <result name="added" type="redirectAction">listCate2</result>
+        </action>
 
+        <action name="setUserRole" class="uslAction" method="setUserRole">
+            <result name="success" type="redirect">usersListByPageState.action</result>
+        </action>
+
+        <action name="modifyBook" class="biAction" method="modifyBook">
+            <result name="modify" type="redirectAction">listBookByPage</result>
+        </action>
+        <action name="deleteBookById" class="biAction" method="deleteBookById">
+            <result name="list" type="redirectAction">listBookByPage</result>
+        </action>
+
+        <action name="jumpToModify" class="biAction" method="jumpToModify">
+            <result name="jump">modifyBook.jsp</result>
+        </action>
 
     </package>
 </struts>

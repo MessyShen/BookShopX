@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="ear" name="BookShopX">
+    <output-path>$PROJECT_DIR$/out/artifacts/BookShopX</output-path>
+    <root id="archive" name="BookShopX.ear">
+      <element id="module-output" name="BookShopX" />
+    </root>
+  </artifact>
+</component>

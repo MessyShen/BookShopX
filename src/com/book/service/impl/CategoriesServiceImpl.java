@@ -27,4 +27,9 @@ public class CategoriesServiceImpl implements CategoriesService {
 //        }
         return categoriesDAO.getAll();
     }
+
+    @Override
+    public int addCate(String cateName) {
+        return categoriesDAO.addCate(cateName);
+    }
 }

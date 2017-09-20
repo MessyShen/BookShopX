@@ -63,11 +63,11 @@
         <%--<li class="bold "><a href="/getting-started.html" class="waves-effect waves-teal">开始学习</a></li>--%>
         <li class="no-padding">
             <ul class="collapsible collapsible-accordion">
-                <li class="bold active"><a class="collapsible-header  waves-effect waves-teal">用户管理</a>
+                <li class="bold"><a class="collapsible-header  waves-effect waves-teal active">用户管理</a>
                     <div class="collapsible-body">
                         <ul>
-                            <li class="active"><a href="usersListByPage.action" class="collection-item">用户信息管理</a></li>
-                            <li class><a href="userState.jsp" class="collection-item">用户状态管理</a></li>
+                            <li class="active"><a href="usersListByPage.action" class="collection-item active">用户信息管理</a></li>
+                            <li class><a href="usersListByPageState" class="collection-item">用户状态管理</a></li>
                         </ul>
                     </div>
                 </li>
@@ -76,7 +76,7 @@
                     <div class="collapsible-body">
                         <ul>
                             <li class><a href="listBookByPage.action" class="collection-item">图书信息管理</a></li>
-                            <li class><a href="bookCate.jsp" class="collection-item">图书分类管理</a></li>
+                            <li class><a href="listCate2.action" class="collection-item">图书分类管理</a></li>
                             <li class><a href="addBook.jsp" class="collection-item">添加图书</a></li>
                         </ul>
                     </div>
@@ -136,7 +136,8 @@
                         TEL:${uiItem.phone}
                     </div>
                     <div class="chip">
-                        Level:${uiItem.userRoleId}
+                        ${uiItem.loginId}
+                        <%--Level:${uiItem.userRoleId}--%>
                     </div>
                     <p>地址：${uiItem.address}</p>
                     <p>邮箱：${uiItem.mail}</p>

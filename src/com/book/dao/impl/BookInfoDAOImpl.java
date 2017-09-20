@@ -40,6 +40,11 @@ public class BookInfoDAOImpl implements BookInfoDAO {
         return (Books)session.get(Books.class, bid);
     }
 
+//    public BookItem getBookItemById(int bkid){
+//        Session session = sessionFactory.getCurrentSession();
+//    }
+
+
     @Override
     public List<Books> getAllByStId(int stPage) {
 //        if (stPage == 0) stPage = 1;
@@ -118,5 +123,72 @@ public class BookInfoDAOImpl implements BookInfoDAO {
         int ret = (Integer) session.save(bk);
         //tran.commit();
         return ret;
+    }
+
+    @Override
+    public List<Books> getAllByCondition(String condition, String searchStr) {
+        Session session = sessionFactory.getCurrentSession();
+        String sql="from Books";
+        Query query;
+        if (condition.equals("title")) {
+            sql="from Books b where b.title like :bname ";
+            query = session.createQuery(sql);
+            query.setString("bname","%"+searchStr+"%");
+        } else if (condition.equals("author")) {
+            sql="from Books b where b.author like :bname";
+            query = session.createQuery(sql);
+            query.setString("bname","%"+searchStr+"%");
+        } else if (condition.equals("isbn")) {
+            sql="from Books b where b.isbn like :bname";
+            query = session.createQuery(sql);
+            query.setString("bname","%"+searchStr+"%");
+        } else {
+            sql="from Books";
+            query = session.createQuery(sql);
+        }
+        List<Books> bkiList = query.list();
+        return bkiList;
+    }
+
+    @Override
+    public void deleteByCate(int cateId) {
+        Session session = sessionFactory.getCurrentSession();
+        String sql="from Categories c where c.id=?";
+        Query query = session.createQuery(sql);
+        query.setParameter(0, cateId);
+        Categories cate = null;
+        List list = query.list();
+        Iterator iteator = list.iterator();
+        if(iteator.hasNext()) {
+            cate = (Categories) iteator.next();
+        }
+        session.delete(cate);
+    }
+
+    public void deleteBookById(int bookId){
+        Session session = sessionFactory.getCurrentSession();
+        String sql="from Books b where b.id=?";
+        Query query = session.createQuery(sql);
+        query.setParameter(0, bookId);
+        Books bookItem = null;
+        List list = query.list();
+        Iterator iteator = list.iterator();
+        if(iteator.hasNext()) {
+            bookItem = (Books) iteator.next();
+        }
+        session.delete(bookItem);
+    }
+
+    @Override
+    public void modifyBook(BookItem book) {
+        Session session = sessionFactory.getCurrentSession();
+        session.update(book);
+    }
+
+    @Override
+    public BookItem getBkItemById(int bid) {
+        Session session = sessionFactory.getCurrentSession();
+        // System.out.println("??");
+        return (BookItem)session.get(BookItem.class, bid);
     }
 }

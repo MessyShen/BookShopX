@@ -40,7 +40,7 @@
             <div class="nav-wrapper">
                 <div class="col s12">
                     <a href="manage.jsp" class="breadcrumb">第三波书店管理系统</a>
-                    <a href="" class="breadcrumb">图书管理</a>
+                    <a href="manage.jsp" class="breadcrumb">图书管理</a>
                     <a href="" class="breadcrumb">图书信息管理</a>
                 </div>
             </div>
@@ -63,21 +63,21 @@
         <%--<li class="bold "><a href="/getting-started.html" class="waves-effect waves-teal">开始学习</a></li>--%>
         <li class="no-padding">
             <ul class="collapsible collapsible-accordion">
-                <li class="bold active"><a class="collapsible-header  waves-effect waves-teal">用户管理</a>
+                <li class="bold"><a class="collapsible-header  waves-effect waves-teal">用户管理</a>
                     <div class="collapsible-body">
                         <ul>
-                            <li class="active"><a href="usersListByPage.action" class="collection-item">用户信息管理</a></li>
+                            <li class><a href="usersListByPage.action" class="collection-item">用户信息管理</a></li>
                             <li class><a href="userState.jsp" class="collection-item">用户状态管理</a></li>
                         </ul>
                     </div>
                 </li>
 
-                <li class="bold"><a class="collapsible-header  waves-effect waves-teal">图书管理</a>
+                <li class="bold"><a class="collapsible-header  waves-effect waves-teal active">图书管理</a>
                     <div class="collapsible-body">
                         <ul>
-                            <li class><a href="listBookByPage.action" class="collection-item">图书信息管理</a></li>
-                            <li class><a href="bookCate.jsp" class="collection-item">图书分类管理</a></li>
-                            <li class><a href="addBook.jsp" class="collection-item">添加图书</a></li>
+                            <li class="active"><a href="listBookByPage.action" class="collection-item">图书信息管理</a></li>
+                            <li class><a href="listCate2.action" class="collection-item">图书分类管理</a></li>
+                            <li class><a href="usersListByPageState" class="collection-item">添加图书</a></li>
                         </ul>
                     </div>
                 </li>
@@ -91,6 +91,29 @@
 </header>
 <main>
     <div class="container">
+        <div class="row">
+            <form action="searchByCond">
+            <div class="input-field col s4">
+                <select name="searchCond">
+                    <option value="" disabled selected>搜索分类</option>
+                    <option value="title">书名</option>
+                    <option value="author">作者</option>
+                    <option value="isbn">isbn</option>
+                </select>
+            </div>
+
+            <div class="input-field col s4">
+                <input id="searchBar" name="searchInfo" type="text" class="validate">
+                <label for="searchBar">搜索内容</label>
+            </div>
+
+            <div class="col s4">
+                <button class="btn waves-effect waves-light" type="submit">搜索
+                    <i class="material-icons right">search</i>
+                </button>
+            </div>
+            </form>
+        </div>
         <table>
             <thead>
             <tr>
@@ -98,7 +121,7 @@
                 <th data-field="name">Title</th>
                 <th>ISBN</th>
                 <th>删除</th>
-                <th>详细信息</th>
+                <th>修改信息</th>
             </tr>
             </thead>
 
@@ -110,7 +133,7 @@
                     <td>${biItem.isbn}</td>
                     <td><a class="waves-effect waves-light btn" href="#modalX${biItem.id}">删除</a></td>
                         <%--<td><a href="deleteById?users.id=${uiItem.id}" class="waves-effect waves-light btn">删除</a></td>--%>
-                    <td><a class="waves-effect waves-light btn" href="#modal${biItem.id}">详细</a></td>
+                    <td><a class="waves-effect waves-light btn" href="#modal${biItem.id}">修改</a></td>
                 </tr>
 
                 <div id="modalX${biItem.id}" class="modal">
@@ -119,7 +142,7 @@
                         <p>确定要删除图书 ${biItem.title} 吗？</p>
                     </div>
                     <div class="modal-footer">
-                        <a href="deleteById?users.id=${biItem.id}" class="waves-effect waves-light btn">删除</a>
+                        <a href="deleteBookById?bkid=${biItem.id}" class="waves-effect waves-light btn">删除</a>
                         <a class=" modal-action modal-close waves-effect waves-green btn-flat">别别别</a>
                     </div>
                 </div>
@@ -136,26 +159,31 @@
                         <div class="chip">
                             ￥${biItem.unitPrice}
                         </div>
+                        <p>出版社：${biItem.publishers.name}<p>
+                        <p>分类：${biItem.categories.name}</p>
                         <p>作者：${biItem.author}</p>
-                        <p>邮箱：${biItem.contentDescription}</p>
+                        <p>描述：${biItem.contentDescription}</p>
                         ${biItem.toc}
                     </div>
                     <div class="modal-footer">
+                        <a href="jumpToModify?bkid=${biItem.id}" class="waves-effect waves-light btn">修改</a>
                         <a class=" modal-action modal-close waves-effect waves-green btn-flat">关闭</a>
                     </div>
                 </div>
             </s:iterator>
             </tbody>
         </table>
+        <s:if test="(#request.BOOKS_LIST.size()>10)">
         <ul class="pagination">
-            <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+            <li class="disabled"><a href="listBookByPage?stPage=1"><i class="material-icons">chevron_left</i></a></li>
             <li class="waves-effect"><a href="listBookByPage?stPage=1">1</a></li>
             <li class="waves-effect"><a href="listBookByPage?stPage=2">2</a></li>
             <li class="waves-effect"><a href="listBookByPage?stPage=3">3</a></li>
             <li class="waves-effect"><a href="listBookByPage?stPage=4">4</a></li>
-            <li class="waves-effect"><a href="#!">5</a></li>
-            <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+            <li class="waves-effect"><a href="listBookByPage?stPage=5">5</a></li>
+            <li class="waves-effect"><a href="listBookByPage?stPage=5"><i class="material-icons">chevron_right</i></a></li>
         </ul>
+        </s:if>
     </div>
 </main>
 
@@ -200,6 +228,20 @@
     });
 </script>
 
+<script type="text/javascript">
+    function searchBookBy(){
+        var searchDescribe = document.getElementById("searchBar").value;
+        var searchCond = document.getElementById("searchCondSelect").value;
+        location.href="searchByCond?searchCond="+searchCond+"&searchInfo="+searchDescribe;
+    }
+</script>
+
 <script> $(".button-collapse").sideNav();</script>
+<script>
+    $(document).ready(function() {
+        $('select').material_select();
+    });
+
+</script>
 </body>
 </html>

@@ -9,4 +9,5 @@ public interface UsersService {
     public Users reg(Users userReg);
     public List<Users> getUsersByPageService(int page);
     public void deleteById(int userId);
+    public void setUserRole(int userId, int newRole) ;
 }

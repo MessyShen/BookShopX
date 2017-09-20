@@ -28,4 +28,16 @@ public class CategoriesDAOImpl implements CategoriesDAO {
       //  System.out.println("catesize:" + categories.size());
         return categories;
     }
+
+    public int addCate(String cateName) {
+        Session session = sessionFactory.getCurrentSession();
+        Categories cate = new Categories();
+        cate.setName(cateName);
+        cate.setpId(0);
+        // tx = session.beginTransaction();
+        session.save(cate);
+        // session.getTransaction().commit();
+        return 0;
+    }
+
 }

@@ -131,6 +131,12 @@
         <property name="bookInfoService" ref="bookInfoService"/>
     </bean>
 
+    <bean name="ctAction" class="com.book.action.CategoryAction">
+        <property name="categoriesService" ref="categoriesService"/>
+        <property name="bookInfoService"  ref="bookInfoService"/>
+    </bean>
+
+
     <!--<bean name="biAction" class="com.book.action.CategoriesInfoActionAction" scope="prototype">-->
         <!--<property name="bookInfoService" ref=""-->
     <!--</bean>-->

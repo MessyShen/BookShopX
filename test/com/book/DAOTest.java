@@ -92,7 +92,7 @@ public class DAOTest {
 
     @Test
     public void search(){
-        String searchStr = "9787111199731";
+        String searchStr = "Visual Basic";
         String sql="from Books b where b.title like :bname ";
         Query query=session.createQuery(sql);
         query.setString("bname", "%"+searchStr+"%");
@@ -125,6 +125,22 @@ public class DAOTest {
         while(itor.hasNext()){
             System.out.println(((Books)itor.next()).getTitle());
         }
+    }
+
+
+    public void searchBy(){
+        String condition = "title";
+        String searchStr = "C++";
+        String sql="from Books b where b.? like :bname ";
+        Query query=session.createQuery(sql);
+        query.setString("bname", "%"+searchStr+"%");
+        List<Books> bkiList = query.list();
+
+    }
+
+    public void setRole(){
+        Users user = (Users)session.get(Users.class, 61);
+
     }
     @After
     public void destroy() {

@@ -38,4 +38,6 @@ public class UsersServiceImpl implements UsersService {
     public void deleteById(int userId) {
         usersDAO.deleteById(userId);
     }
+
+    public void setUserRole(int userId, int newRole) {usersDAO.setUserRole(userId, newRole);}
 }

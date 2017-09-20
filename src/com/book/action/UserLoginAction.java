@@ -37,6 +37,26 @@ public class UserLoginAction extends ActionSupport implements SessionAware {
         this.pageID = pageID;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    int userId;
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
+    }
+
+    int role;
+
     @Autowired
     UsersService usersService;
 
@@ -86,15 +106,33 @@ public class UserLoginAction extends ActionSupport implements SessionAware {
     public String usersListByPage(){
         List<Users> usersList = usersService.getUsersByPageService(pageID);
         if (usersList.size() > 0) {
-            System.out.println("Putting Users List");
+          //  System.out.println("Putting Users List");
             session.put("USERS_LIST", usersList);
         }
         return "list";
 
     }
 
+
+    public String usersListByPageState(){
+        List<Users> usersList = usersService.getUsersByPageService(pageID);
+        if (usersList.size() > 0) {
+          //  System.out.println("Putting Users List");
+            session.put("USERS_LIST", usersList);
+        }
+        return "list";
+    }
+
+
     public String deleteById(){
         usersService.deleteById(users.getId());
         return "list";
     }
+
+
+    public String setUserRole(){
+        usersService.setUserRole(userId, role);
+        return "success";
+    }
+
 }

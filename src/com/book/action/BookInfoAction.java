@@ -1,5 +1,6 @@
 package com.book.action;
 
+import com.book.entity.BookItem;
 import com.book.entity.Books;
 import com.book.entity.Categories;
 import com.book.service.BookInfoService;
@@ -31,6 +32,26 @@ public class BookInfoAction extends ActionSupport implements RequestAware {
         this.cate = cate;
     }
 
+    int cateId;
+
+    public int getCateId() {
+        return cateId;
+    }
+
+    public void setCateId(int cateId) {
+        this.cateId = cateId;
+    }
+
+    public int getBkid() {
+        return bkid;
+    }
+
+    public void setBkid(int bkid) {
+        this.bkid = bkid;
+    }
+
+    int bkid;
+
     CategoriesService categoriesService;
 
     public CategoriesService getCategoriesService() {
@@ -60,6 +81,17 @@ public class BookInfoAction extends ActionSupport implements RequestAware {
     public void setBk(Books bk) {
         this.bk = bk;
     }
+
+    public BookItem getBkItem() {
+        return bkItem;
+    }
+
+    public void setBkItem(BookItem bkItem) {
+        this.bkItem = bkItem;
+    }
+
+    BookItem bkItem;
+
 
     Map<String, Object> request;
     @Override
@@ -124,6 +156,15 @@ public class BookInfoAction extends ActionSupport implements RequestAware {
         return "list";
     }
 
+    public String listCate2() throws Exception {
+        List<Categories> categoriesList = categoriesService.getAllCates();
+        System.out.println(categoriesList.size());
+        if (categoriesList.size() > 0) {
+            request.put("categoriesList", categoriesList);
+        }
+        return "list";
+    }
+
     String searchInfo;
 
     public String getSearchInfo() {
@@ -133,6 +174,16 @@ public class BookInfoAction extends ActionSupport implements RequestAware {
     public void setSearchInfo(String searchInfo) {
         this.searchInfo = searchInfo;
     }
+
+    public String getSearchCond() {
+        return searchCond;
+    }
+
+    public void setSearchCond(String searchCond) {
+        this.searchCond = searchCond;
+    }
+
+    String searchCond;
 
     public String searchBy() throws Exception {
         List<Categories> categoriesList = categoriesService.getAllCates();
@@ -144,6 +195,36 @@ public class BookInfoAction extends ActionSupport implements RequestAware {
         List<Books> booksList = bookInfoService.searchForBookInfo(searchInfo);
         request.put("booksList", booksList);
         return "list";
+    }
+
+    public String searchByCond() throws Exception{
+        request.remove("BOOKS_LIST");
+        List<Books> booksList = bookInfoService.searchByCond(searchCond, searchInfo);
+        request.put("BOOKS_LIST", booksList);
+        return "list";
+    }
+
+    public String deleteByCate() {
+        bookInfoService.deleteByCateService(cateId);
+        return "list";
+    }
+
+    public String deleteBookById(){
+        bookInfoService.deleteBookById(bkid);
+        return "list";
+    }
+
+    public String modifyBook(){
+        bookInfoService.updateBook(bkItem);
+        return "modify";
+    }
+
+    public String jumpToModify(){
+//        int bkid;
+        BookItem book = bookInfoService.getBkItemById(bkid);
+        setBkItem(book);
+        request.put("ModifyingBook", book);
+        return "jump";
     }
 
 

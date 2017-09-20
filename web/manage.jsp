@@ -34,7 +34,7 @@
 
 <header>
     <nav>
-        <div class="nav-wrapper blue-grey darken-3">
+        <div class="nav-wrapper">
             <a href="index.jsp" class="brand-logo"></a>
             <%--<div class="input-field">--%>
             <%--<input id="search" type="search" required>--%>
@@ -77,17 +77,17 @@
                 <li class="bold"><a class="collapsible-header  waves-effect waves-teal">用户管理</a>
                     <div class="collapsible-body">
                         <ul>
-                            <li class><a href="usersListByPage.action" class="collection-item">用户信息管理</a></li>
-                            <li class><a href="userState.jsp" class="collection-item">用户状态管理</a></li>
+                            <li class><a href="usersListByPage.action" class="collection-item active">用户信息管理</a></li>
+                            <li class><a href="usersListByPageState" class="collection-item">用户状态管理</a></li>
                         </ul>
                     </div>
                 </li>
 
-                <li class="bold"><a class="collapsible-header  waves-effect waves-teal">图书管理</a>
+                <li class="bold"><a class="collapsible-header  waves-effect waves-teal active">图书管理</a>
                     <div class="collapsible-body">
                         <ul>
                             <li class><a href="listBookByPage.action" class="collection-item">图书信息管理</a></li>
-                            <li class><a href="bookCate.jsp" class="collection-item">图书分类管理</a></li>
+                            <li class><a href="listCate2.action" class="collection-item">图书分类管理</a></li>
                             <li class><a href="addBook.jsp" class="collection-item">添加图书</a></li>
                         </ul>
                     </div>
@@ -104,7 +104,9 @@
     </ul>
 </header>
 <main>
-
+    <div class="container">
+    <h4>管理员您好，欢迎来到图书管理系统！</h4>
+    </div>
 </main>
 
 
@@ -139,6 +141,5 @@
 </body>
 
 </html>
-     ^ 
---%>
+
 

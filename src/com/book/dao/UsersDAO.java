@@ -9,5 +9,7 @@ public interface UsersDAO {
     public Users reg(Users userReg);
     public List<Users> getUsersByPage(int page);
     public void deleteById(int userId);
+    public Users getById(int userId);
+    public void setUserRole(int userId, int newRole);
 }
 

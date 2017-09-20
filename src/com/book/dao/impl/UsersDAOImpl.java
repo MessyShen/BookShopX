@@ -26,27 +26,21 @@ public class UsersDAOImpl implements UsersDAO {
     @Override
     public List<Users> search(Users cond) {
 
-        String sql="from Users u where u.loginId=? and u.loginPwd=?";//HQL语句
+        String sql="from Users u where u.loginId=? and u.loginPwd=?";
         Session session= sessionFactory.getCurrentSession();
         Query query=session.createQuery(sql);
         query.setParameter(0, cond.getLoginId()) ;
         query.setParameter(1, cond.getLoginPwd());
         List<Users> users=query.list();
-
-//        System.out.println("searching " + cond.getLoginId() + " : " + users.size());
         return users;
     }
 
     @Override
     public Users reg(Users userReg) {
-//        System.out.println(userReg.getLoginId());
         userReg.setUserRoleId(1);
         userReg.setUserStateId(1);
-       // Transaction tx = null;
         Session session = sessionFactory.getCurrentSession();
-       // tx = session.beginTransaction();
         session.save(userReg);
-       // session.getTransaction().commit();
         return userReg;
     }
 
@@ -78,5 +72,24 @@ public class UsersDAOImpl implements UsersDAO {
             user = (Users)iteator.next();
         }
         session.delete(user);
+    }
+
+
+    public Users getById(int userId){
+        Session session = sessionFactory.getCurrentSession();
+        String sql="from Users u where u.id=?";
+        Query query = session.createQuery(sql);
+        query.setParameter(0, userId);
+        List<Users> list= query.list();
+        return list.get(0);
+    }
+
+
+    @Override
+    public void setUserRole(int userId, int newRole) {
+        Session session = sessionFactory.getCurrentSession();
+        Users user = getById(userId);
+        user.setUserRoleId(newRole);
+        session.update(user);
     }
 }
